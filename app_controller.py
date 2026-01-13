@@ -8,11 +8,7 @@ from catalog import build_tree_and_items, init_availability
 from dsa_structures import Stack, Queue, PriorityQueue, DoublyLinkedList
 from requests import make_request, reason_to_priority, append_history
 
-
-# ================================
 # Helper functions
-# ================================
-
 def _safe_len(ds):
     """Safely get length of any DSA structure"""
     try:
@@ -20,11 +16,7 @@ def _safe_len(ds):
     except Exception:
         return 0
 
-
-# ================================
 # CART (DOUBLY LINKED LIST)
-# ================================
-
 class Cart:
     """
     Cart implementation using Doubly Linked List
@@ -52,11 +44,7 @@ class Cart:
     def items(self):
         return self.items_list.to_list()  # DLL traversal
 
-
-# ================================
 # MAIN CONTROLLER
-# ================================
-
 class CircuitLendController:
     """
     Central controller that explicitly uses:
@@ -96,10 +84,7 @@ class CircuitLendController:
                            student_id="2026-00001", password="test123")
         self.auth.register("Juan", student_id="2026-12345", password="pass")
 
-    # ================================
     # SETTINGS
-    # ================================
-
     def _load_settings(self):
         try:
             if os.path.isfile(self.settings_file):
@@ -137,10 +122,7 @@ class CircuitLendController:
         self.settings[key] = value
         return self._persist()
 
-    # ================================
     # AUTHENTICATION
-    # ================================
-
     def login(self, identifier, password=None):
         res = self.auth.login(identifier, password)
         if res:
@@ -182,10 +164,7 @@ class CircuitLendController:
             return False, "Please log in first."
         return self.auth.change_password(self.current_user, old_pwd, new_pwd)
 
-    # ================================
     # CATALOG
-    # ================================
-
     def search_items(self, q):
         from catalog import array_search
         return array_search(self.all_items, q)
@@ -197,10 +176,7 @@ class CircuitLendController:
     def availability_of(self, item):
         return self.availability.get(item, 0)
 
-    # ================================
     # CART OPERATIONS (DLL)
-    # ================================
-
     def add_to_cart(self, item):
         if item not in self.availability:
             return False, "Item not found."
@@ -211,10 +187,7 @@ class CircuitLendController:
     def remove_from_cart(self, item):
         return self.cart.remove(item)
 
-    # ================================
     # BORROW REQUESTS (QUEUE & PQ)
-    # ================================
-
     def submit_borrow(self, reason="normal", prioritize=False,
                       id_deposit=True, borrow_date=None, return_date=None):
 
@@ -269,10 +242,7 @@ class CircuitLendController:
             f"Priority: {_safe_len(self.priority_q)}"
         )
 
-    # ================================
     # HISTORY & RECEIPTS
-    # ================================
-
     def list_borrow_history(self):
         if not self.current_user:
             return []
@@ -299,10 +269,7 @@ class CircuitLendController:
             "issued_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
         }
 
-    # ================================
     # RETURNS & UNDO (STACK)
-    # ================================
-
     def return_items(self, items):
         if not self.current_user:
             return False, "Please log in first."
