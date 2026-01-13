@@ -2,11 +2,8 @@
 from collections import deque
 import heapq
 
-# ================================
 # DOUBLY LINKED LIST
 # Used for Cart items management
-# ================================
-
 class DLLNode:
     def __init__(self, value):
         self.value = value
@@ -69,12 +66,8 @@ class DoublyLinkedList:
             yield current.value
             current = current.next
 
-
-# ================================
 # STACK (LIFO)
 # Used for UNDO operations
-# ================================
-
 class Stack:
     def __init__(self):
         self._data = []
@@ -90,12 +83,8 @@ class Stack:
     def __len__(self):
         return len(self._data)
 
-
-# ================================
 # QUEUE (FIFO)
 # Used for NORMAL borrow requests
-# ================================
-
 class Queue:
     def __init__(self):
         self._queue = deque()
@@ -111,12 +100,8 @@ class Queue:
     def __len__(self):
         return len(self._queue)
 
-
-# ================================
 # PRIORITY QUEUE (Min-Heap)
 # Used for PRIORITIZED borrowing
-# ================================
-
 class PriorityQueue:
     def __init__(self):
         self._heap = []
